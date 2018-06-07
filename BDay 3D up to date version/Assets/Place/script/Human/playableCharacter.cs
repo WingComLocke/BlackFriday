@@ -6,12 +6,18 @@ namespace BlackFriday
     public class PlayableCharacter : MonoBehaviour
     {
 
-        protected string characterName;//constructor
-        protected float healthPoint;
-        protected float cashScore;
-        protected float goalScore;
-        protected float movementSpeed;
-        protected bool isDead;
+        protected string characterName;//Name of the person, set during the constructor and nopt changed after
+        protected int healthPoint;//Abreviated to HP when refering in documentation
+        protected int cashStore;//Current availible cash for purchasing
+        protected int goalScore;//game victory condition. (Perhaps this should be part of the specific map as opposed to player?)
+        protected float movementSpeed;//Player movement speed (some Unit-per-tick)
+        protected bool isDead;//If the player is dead or not
+        protected int playertatus;//enumerated status
+                            // 0 = Despawned
+                            // 1 = Normal
+                            // 2 = Prone
+                            // 3 = Stunned
+                            // ...
 
         protected CapsuleCollider bodySpace;
         protected SphereCollider vulnerabilitySpace;
