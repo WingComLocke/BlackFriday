@@ -43,17 +43,26 @@ namespace BlackFriday
         //These are the rigid bodyies for the player
         protected CapsuleCollider bodySpace; //The physical body of the player which will be textured
         protected SphereCollider vulnerabilitySpace; //this is basically the hitbox of the player
-        
+
         //Gameplay elements 
+
+        //Gamescore, win condition elements
         protected List<Merch> shoppingCart; //Current list of merch items collected 
         protected bool addMerchToCart(Merch addItem);//Mutator to add an item
         protected int cartSize; //Maximun number of items that can be placed within the cart
         protected int cartCounter; //Current max cart item slot used
         protected bool cartFull; //When the cart is full you cannot add any more (0 = not full, 1 = full)
+        protected void merchPickup(Merch item); //the function which adds a merch item to the shopping cart and updates score.
 
+        //consumable inventory related elements
         protected List<Consumable> inventory; //Inventory for consumable non-merch items, Current active item is in slot 0
         protected int invSize; //Maximum number of items that can be placed within the inventory
-        protected bool invFull; //When the inventory is full you cannot add any more (0 = not full, 1 = full) 
+        protected bool invFull; //When the inventory is full you cannot add any more (0 = not full, 1 = full)     
+        protected int invCounter; //current number of items 
+        protected void collectablePickup(Collectable theItem); //function for mutating the collectable methodes
+        protected void rotateInventory(); //rotates the inventory by 1 slot to the left (loops around) placing a new item in the active slot 
+
+
 
         //Constructors for player characters. Can be overwritten
         protected virtual PlayableCharacter(string Name, int HP, int maxHP, int cash, int goal, float moveSpeed, int cartS, int invS)
@@ -221,17 +230,41 @@ namespace BlackFriday
             }
         }
 
-        
+        //Mutator to add an item
+        protected bool addMerchToCart(Merch addItem)
+        {
+
+        }
+
+
+        /// <summary>
+        /// Consumable Inventory related stuff
+        /// </summary>
+
+
+        //function for mutating the collectable methodes
+        protected void collectablePickup(Collectable theItem)
+        {
+            inventory.Add(theItem);
+        }
+
+        //rotates the inventory by 1 slot to the left (loops around) placing a new item in the active slot
+        protected void rotateInventory()
+        {
+            
+        }
+
+
 
         // Use this for initialization
-
-        protected void collectItem(Collectable theItem)
-        {
-            ;
-        }
         void Start()
         {
             isDead = false;
+            cartFull = false;
+            invFull = false;
+
+            cartCounter = 0;
+            playerStatus = 1;
         }
 
         // Update is called once per frame
