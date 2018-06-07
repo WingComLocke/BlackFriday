@@ -45,7 +45,7 @@ namespace BlackFriday
         protected SphereCollider vulnerabilitySpace; //this is basically the hitbox of the player
         
         //Gameplay elements 
-        protected List<Merch> shoppoingCart; //Current list of merch items collected 
+        protected List<Merch> shoppingCart; //Current list of merch items collected 
         protected bool addMerchToCart(Merch addItem);//Mutator to add an item
         protected int cartSize; //Maximun number of items that can be placed within the cart
         protected int cartCounter; //Current max cart item slot used
@@ -55,7 +55,33 @@ namespace BlackFriday
         protected int invSize; //Maximum number of items that can be placed within the inventory
         protected bool invFull; //When the inventory is full you cannot add any more (0 = not full, 1 = full) 
 
+        //Constructors for player characters. Can be overwritten
+        protected virtual PlayableCharacter(string Name, int HP, int maxHP, int cash, int goal, float moveSpeed, int cartS, int invS)
+        {
+            characterName = Name;
+            healthPoint = HP;
+            maxHealthPoint = maxHP;
+            cashStore = cash;
+            goalScore = goal;
+            movementSpeed = moveSpeed;
+            cartSize = cartS;
+            invSize = invS;
 
+            isDead = false;
+            cartFull = false;
+            invFull = false;
+
+            cartCounter = 0;
+            playerStatus = 0;
+
+        }
+
+        //Finalizer
+        protected virtual ~PlayableCharacter()
+        {
+            inventory.Clear;
+            shoppingCart.Clear;
+        }
 
         /// <summary>
         /// HP Related Methodes Implementation
