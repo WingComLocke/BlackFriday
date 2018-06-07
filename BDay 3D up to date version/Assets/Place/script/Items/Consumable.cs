@@ -13,6 +13,8 @@ namespace BlackFriday
         protected float duration;//istant item will have duration 0
 
 
-
+        protected void useItem(){
+            ;
+        }
     }
 }
