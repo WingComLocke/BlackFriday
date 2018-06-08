@@ -13,8 +13,20 @@ namespace BlackFriday
         protected float duration;//istant item will have duration 0
 
 
-        protected void useItem(){
+        private void OnTriggerEnter(Collider other)
+        {
+            
+        }
+        protected override void Start()
+        {
             ;
+        }
+        protected override void pickUpItem(PlayableCharacter player)
+        {
+            ;
+        }
+        protected void useItem(){
+           ;
         }
     }
 }

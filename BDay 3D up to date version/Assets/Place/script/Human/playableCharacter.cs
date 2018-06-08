@@ -11,11 +11,11 @@ namespace BlackFriday
         //HP and manipulation methodes
         protected int healthPoint;//Abreviated to HP when refering in documentation
         protected int maxHealthPoint; //Maximum Health point possible
-        protected void summationHealth(int deltaHP); //adds or subtracts health by a flat number
-        protected void percentHPChangeIncreaseMax(int deltaHpPercentUpMax); //Percent adjustment of HP increase (Max health)
-        protected void percentHPChangeDecreaseMax(int deltaHpPercentDownMax); //Percent adjustment of HP increase (Max Health)
-        protected void percentHPChangeIncreaseCur(int deltaHpPercentUpCur); //Percent adjustment of HP increase (Current health)
-        protected void percentHPChangeDecreaseCur(int deltaHpPercentDownCur); //Percent adjustment of HP increase (Current Health)
+        //protected void summationHealth(int deltaHP); //adds or subtracts health by a flat number
+        //protected void percentHPChangeIncreaseMax(int deltaHpPercentUpMax); //Percent adjustment of HP increase (Max health)
+        //protected void percentHPChangeDecreaseMax(int deltaHpPercentDownMax); //Percent adjustment of HP increase (Max Health)
+        //protected void percentHPChangeIncreaseCur(int deltaHpPercentUpCur); //Percent adjustment of HP increase (Current health)
+        //protected void percentHPChangeDecreaseCur(int deltaHpPercentDownCur); //Percent adjustment of HP increase (Current Health)
         
         //Score related functions
         protected int cashStore;//Current availible cash for purchasing
@@ -23,9 +23,9 @@ namespace BlackFriday
 
         //Mobility modifiers
         protected float movementSpeed;//Player movement speed (some Unit-per-tick)
-        protected void summationMS(int deltaMS); //adds or subtracts MS by a flat number
-        protected void percentMSChangeIncreaseCur(int deltaMSPercentUpCur); //Percent adjustment of MS increase (Current MS)
-        protected void percentMSChangeDecreaseCur(int deltaMSPercentDownCur); //Percent adjustment of MS increase (Current MS)
+        //protected void summationMS(int deltaMS); //adds or subtracts MS by a flat number
+        //protected void percentMSChangeIncreaseCur(int deltaMSPercentUpCur); //Percent adjustment of MS increase (Current MS)
+        //protected void percentMSChangeDecreaseCur(int deltaMSPercentDownCur); //Percent adjustment of MS increase (Current MS)
 
         //Player condition/Status 
         protected bool isDead;//If the player is dead or not
@@ -48,24 +48,24 @@ namespace BlackFriday
 
         //Gamescore, win condition elements
         protected List<Merch> shoppingCart; //Current list of merch items collected 
-        protected bool addMerchToCart(Merch addItem);//Mutator to add an item
+        //protected bool addMerchToCart(Merch addItem);//Mutator to add an item
         protected int cartSize; //Maximun number of items that can be placed within the cart
         protected int cartCounter; //Current max cart item slot used
         protected bool cartFull; //When the cart is full you cannot add any more (0 = not full, 1 = full)
-        protected void merchPickup(Merch item); //the function which adds a merch item to the shopping cart and updates score.
+        //protected void merchPickup(Merch item); //the function which adds a merch item to the shopping cart and updates score.
 
         //consumable inventory related elements
-        protected List<Consumable> inventory; //Inventory for consumable non-merch items, Current active item is in slot 0
+        protected List<Collectable> inventory; //Inventory for consumable non-merch items, Current active item is in slot 0
         protected int invSize; //Maximum number of items that can be placed within the inventory
         protected bool invFull; //When the inventory is full you cannot add any more (0 = not full, 1 = full)     
         protected int invCounter; //current number of items 
-        protected void collectablePickup(Collectable theItem); //function for mutating the collectable methodes
-        protected void rotateInventory(); //rotates the inventory by 1 slot to the left (loops around) placing a new item in the active slot 
+        //protected void collectablePickup(Collectable theItem); //function for mutating the collectable methodes
+        //protected void rotateInventory(); //rotates the inventory by 1 slot to the left (loops around) placing a new item in the active slot 
 
 
 
         //Constructors for player characters. Can be overwritten
-        protected virtual PlayableCharacter(string Name, int HP, int maxHP, int cash, int goal, float moveSpeed, int cartS, int invS)
+        protected PlayableCharacter(string Name, int HP, int maxHP, int cash, int goal, float moveSpeed, int cartS, int invS)
         {
             characterName = Name;
             healthPoint = HP;
@@ -86,10 +86,10 @@ namespace BlackFriday
         }
 
         //Finalizer
-        protected virtual ~PlayableCharacter()
+        ~PlayableCharacter()
         {
-            inventory.Clear;
-            shoppingCart.Clear;
+            inventory.Clear();
+            shoppingCart.Clear();
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace BlackFriday
         /// </summary>
 
         //Overwriting the defult get and set functions to simultaniously update ifDead if dead
-        protected int healthPoint
+        protected int HealthPoint
         {
             // get remains the same
             get
@@ -131,6 +131,25 @@ namespace BlackFriday
             }
         }
 
+        protected void adjustHealthPoint(int type, float _value)
+        {
+            switch (type)
+            {
+                case 1: 
+                    //adds or subtracts health by a flat number
+                    healthPoint += (int)_value;
+                    break;
+                case 2:
+                    //Percent adjustment of HP increase (Max health)
+                    healthPoint += (int)(_value *maxHealthPoint);
+                    break;
+                case 3:
+                    //Percent adjustment of HP increase (Current health)
+                    healthPoint *= (int)(_value + 1);
+                    break;
+
+            }
+        }
         //adds or subtracts health by a flat number
         protected void summationHealth(int deltaHP)
         {
@@ -151,7 +170,7 @@ namespace BlackFriday
         protected void percentHPChangeDecreaseMax(int deltaHpPercentDownMax)
         {
             int temp = healthPoint;
-            temp = temp - maxHealthPoint * (deltaHpPercentUpMax);
+            temp = temp - maxHealthPoint * (deltaHpPercentDownMax);
             healthPoint = temp;
         }
 
@@ -188,7 +207,7 @@ namespace BlackFriday
         //Percent adjustment of MS increase (Current MS)
         protected void percentMSChangeIncreaseCur(int deltaMSPercentUpCur)
         {
-            int temp = movementSpeed;
+            float temp = movementSpeed;
             temp = temp * (1 + deltaMSPercentUpCur);
             movementSpeed = temp;
         }
@@ -196,8 +215,8 @@ namespace BlackFriday
         //Percent adjustment of MS increase (Current MS)
         protected void percentMSChangeDecreaseCur(int deltaMSPercentDownCur)
         {
-            int temp = movementSpeed;
-            temp = temp * (1 - deltaMSPercentUpCur);
+            float temp = movementSpeed;
+            temp = temp * (1 - deltaMSPercentDownCur);
             movementSpeed = temp;
         }
         
@@ -233,7 +252,7 @@ namespace BlackFriday
         //Mutator to add an item
         protected bool addMerchToCart(Merch addItem)
         {
-
+            return true;
         }
 
 
@@ -274,10 +293,15 @@ namespace BlackFriday
             if (inventory.Count == invSize) invFull = true;
             else invFull = false;
             //trigger during merch pick up
-            if (shoppoingCart.Count == cartSize) cartFull = true;
+            if (shoppingCart.Count == cartSize) cartFull = true;
             else cartFull = false;
 
 
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            
         }
     }
 }

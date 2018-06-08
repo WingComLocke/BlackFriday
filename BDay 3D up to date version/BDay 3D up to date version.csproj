@@ -79,6 +79,9 @@
     <Reference Include="Mono.Cecil">
       <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
     </Reference>
+    <Reference Include="Facebook.Unity.Settings">
+      <HintPath>Library\FacebookSDK\Facebook.Unity.Settings.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Place\script\Human\playableCharacter.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Assets\Place\script\Items\item.cs" />
     <Compile Include="Assets\Place\script\Items\itemResidual.cs" />
     <Compile Include="Assets\Place\script\Skills.cs" />
+    <Compile Include="Assets\Place\script\colliderAttachment.cs" />
     <Compile Include="Assets\Place\script\movingball.cs" />
     <Compile Include="Assets\cam.cs" />
   </ItemGroup>
